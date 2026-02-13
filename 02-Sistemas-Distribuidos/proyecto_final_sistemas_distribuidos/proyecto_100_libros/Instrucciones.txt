@@ -1,0 +1,66 @@
+# PROYECTO: Sistema de Recomendación de Libros con PySpark
+
+## DESCRIPCIÓN
+Este sistema descarga automáticamente libros de Project Gutenberg, los procesa utilizando Big Data (PySpark) para encontrar similitudes entre ellos y genera resúmenes automáticos basados en palabras clave (TF-IDF).
+
+---
+
+## 1. PREPARACIÓN DEL ENTORNO (Hacer esto solo una vez)
+
+Antes de empezar, abre tu terminal en la carpeta del proyecto y sigue estos pasos para configurar todo:
+
+A) Instalar herramientas del sistema (Java y entorno virtual de Python):
+   (Te pedirá tu contraseña de usuario)
+   $ sudo apt update
+   $ sudo apt install default-jdk python3-venv
+
+B) Crear el Entorno Virtual (Caja de arena):
+   $ python3 -m venv venv
+
+C) Activar el Entorno Virtual:
+   (Verás que aparece '(venv)' al inicio de la línea)
+   $ source venv/bin/activate
+
+D) Instalar las librerías necesarias dentro del entorno:
+   $ pip install pyspark numpy requests beautifulsoup4
+
+---
+
+## 2. EJECUCIÓN DEL PROYECTO
+
+IMPORTANTE: Siempre que vayas a ejecutar estos scripts, asegúrate de que tu entorno esté activado.
+Si no ves '(venv)' al principio de la línea, ejecuta:
+$ source venv/bin/activate
+
+Sigue estos pasos en orden:
+
+PASO 1: Descargar los libros
+$ python3 get_books.py
+> Este script descargará los 100 libros más populares en la carpeta 'libros/'.
+
+PASO 2: Limpieza de texto
+$ python3 clean_books.py
+> Elimina las licencias y textos legales de Project Gutenberg de todos los archivos.
+
+PASO 3: Crear vocabulario
+$ python3 create_vocab.py
+> Genera el archivo 'vocabulario.txt' con las palabras únicas filtradas.
+
+PASO 4: Calcular Matriz de Similitud (PySpark)
+$ python3 matrix_spark.py
+> Utiliza Spark para procesar los textos y genera 'matriz_similitud.txt'.
+
+PASO 5: Pedir Recomendaciones
+$ python3 recommend.py
+> Muestra los 5 libros más parecidos al primer libro de la lista (prueba automática).
+
+PASO 6: Generar Resumen de un Libro
+(Reemplaza "Christmas" por la palabra que quieras buscar y 10 por el número de palabras clave)
+$ python3 summarize_book.py "Christmas" 10
+> Muestra las palabras clave más representativas de ese libro usando TF-IDF.
+
+---
+
+## NOTAS ADICIONALES
+- Si cierras la terminal, recuerda volver a activar el entorno con: source venv/bin/activate
+- Los datos generados se guardan en archivos .txt para fácil inspección.
